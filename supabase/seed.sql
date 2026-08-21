@@ -2,18 +2,6 @@
 -- The street rows are intentionally synthetic. Replace them with the OSM import
 -- before production while preserving the same city slugs and difficulty pools.
 
-insert into public.countries (id, code, default_locale)
-values ('00000000-0000-4000-8000-000000000001', 'DE', 'de')
-on conflict (code) do update
-set default_locale = excluded.default_locale;
-
-insert into public.country_translations (country_id, locale, name)
-values
-  ('00000000-0000-4000-8000-000000000001', 'de', 'Deutschland'),
-  ('00000000-0000-4000-8000-000000000001', 'en', 'Germany')
-on conflict (country_id, locale) do update
-set name = excluded.name;
-
 with city_data (
   id,
   slug,
