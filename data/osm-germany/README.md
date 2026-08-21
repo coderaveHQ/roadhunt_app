@@ -88,6 +88,45 @@ A non-local database is rejected unless `--allow-remote` is explicit. Treat a
 remote publish as a production data migration: take a backup, review the pinned
 snapshot and run `verify` afterwards.
 
+## Micro production transfer
+
+Do not run the full spatial transformation against a Micro production project.
+Export only the already-published local catalog into a compressed, checksummed
+archive and restore that archive into a fresh production database:
+
+```sh
+npm run osm:export:production
+export ROADHUNT_PRODUCTION_DATABASE_URL='<direct-or-session-pooler-url>'
+npm run osm:restore:production -- --allow-remote
+unset ROADHUNT_PRODUCTION_DATABASE_URL
+```
+
+The target must already contain every migration, including the production DE
+reference-data migration, and must have empty catalog and game tables. The
+restore uses one transaction and one worker, includes no `osm_import` staging,
+removes the 480 disabled synthetic fixtures, analyzes the restored tables, and
+checks the exact pinned city, street, geometry and difficulty-pool contracts.
+The database URL is read only from the process environment so its password does
+not appear in command arguments or repository files.
+
+If the machine running Codex cannot open outbound PostgreSQL ports, the same
+final dataset can be streamed over Supabase HTTPS instead. Install
+`scripts/osm-germany/production-http-import-install.sql` temporarily through
+the SQL Editor, then run:
+
+```sh
+export ROADHUNT_PRODUCTION_SECRET_KEY='<existing-sb_secret-key>'
+npm run osm:restore:production:https
+unset ROADHUNT_PRODUCTION_SECRET_KEY
+```
+
+The HTTPS path sends bounded, retryable batches and is safe to resume because
+every insert is idempotent. It excludes synthetic fixtures before transfer and
+checks the same pinned counts, snapshot metadata and difficulty pools. After a
+successful final verification, run
+`scripts/osm-germany/production-http-import-uninstall.sql` so the temporary
+service-role-only RPC does not remain in production.
+
 ## Legacy twelve-city snapshot
 
 The older Overpass transformer and its small SQL artifacts remain under

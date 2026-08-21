@@ -12,6 +12,7 @@
 
 # reproducible but large OpenStreetMap Germany import workspace
 /data/osm-germany/cache/
+/data/osm-germany/production/
 /data/osm-germany/work/
 
 # local environment files

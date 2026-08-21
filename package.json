@@ -22,7 +22,11 @@
     "db:test": "supabase test db",
     "db:types": "supabase gen types typescript --local --schema public,private > src/lib/supabase/database.types.ts",
     "osm:import": "tsx scripts/import-osm-germany.ts",
-    "osm:import:legacy": "tsx scripts/import-osm.ts"
+    "osm:import:legacy": "tsx scripts/import-osm.ts",
+    "osm:export:production": "tsx scripts/transfer-production-data.ts export",
+    "osm:restore:production": "tsx scripts/transfer-production-data.ts restore",
+    "osm:restore:production:https": "tsx scripts/transfer-production-http.ts",
+    "osm:verify:production": "tsx scripts/transfer-production-data.ts verify"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",
