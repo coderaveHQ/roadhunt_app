@@ -124,7 +124,7 @@ export interface BaseGameStateDto {
   readonly roundNumber: number;
   readonly totalRounds: 10;
   readonly roundDurationSeconds: 60;
-  readonly revealDurationSeconds: 5;
+  readonly revealDurationSeconds: 15;
   readonly serverNow: string;
   readonly players: readonly PlayerStateDto[];
   readonly revealedRounds: readonly CompletedRoundDto[];

@@ -80,7 +80,7 @@ function advancePastReveal(gameId: string) {
       begin;
 
       update private.game_rounds
-      set revealed_at = statement_timestamp() - interval '6 seconds'
+      set revealed_at = statement_timestamp() - interval '16 seconds'
       where game_id = :'game_id'::uuid
         and status = 'revealing';
 
@@ -324,7 +324,7 @@ test("two isolated players finish all ten private-lobby rounds and reconnect", a
         }
       });
 
-      await test.step(`round ${round} advances without a five-second wall-clock wait`, async () => {
+      await test.step(`round ${round} advances without a fifteen-second wall-clock wait`, async () => {
         const expectedDatabaseState = round < 10 ? `${round + 1}|playing` : "10|finished";
         expect(advancePastReveal(gameId)).toBe(expectedDatabaseState);
 

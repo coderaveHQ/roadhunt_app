@@ -915,7 +915,7 @@ begin
       and gr.round_number = v_game.current_round_number
     for update;
 
-    if v_round.revealed_at + interval '5 seconds' <= p_now then
+    if v_round.revealed_at + interval '15 seconds' <= p_now then
       update private.game_rounds
       set status = 'complete',
           completed_at = p_now
@@ -1049,7 +1049,7 @@ begin
       when gr.status in ('revealing', 'complete') then jsonb_build_object(
         'revealEndsAt', case
           when gr.revealed_at is null then null
-          else gr.revealed_at + interval '5 seconds'
+          else gr.revealed_at + interval '15 seconds'
         end,
         'targetGeometry', extensions.st_asgeojson(s.geom, 6)::jsonb,
         'guesses', coalesce((
@@ -1143,7 +1143,7 @@ begin
     'roundNumber', v_game.current_round_number,
     'totalRounds', 10,
     'roundDurationSeconds', 60,
-    'revealDurationSeconds', 5,
+    'revealDurationSeconds', 15,
     'serverNow', statement_timestamp(),
     'players', v_players,
     'currentRound', v_current_round,

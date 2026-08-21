@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select extensions.plan(46);
+select extensions.plan(48);
 
 insert into auth.users (
   id,
@@ -202,6 +202,11 @@ select extensions.is(
   'last submission reveals the round'
 );
 select extensions.is(
+  (select (state->>'revealDurationSeconds')::integer from road_test_state where step = 'revealed'),
+  15,
+  'game state exposes the fifteen-second reveal duration'
+);
+select extensions.is(
   (select state->'currentRound'->'targetGeometry'->>'type' from road_test_state where step = 'revealed'),
   'MultiLineString',
   'revealed target has canonical MultiLineString geometry'
@@ -249,6 +254,27 @@ where id = (
   where step = 'revealed'
 );
 
+select extensions.is(
+  (
+    select public.synchronize_game(
+      (started.state->>'id')::uuid,
+      'a0000000-0000-4000-8000-000000000001'
+    )->>'status'
+    from road_test_state started
+    where started.step = 'started'
+  ),
+  'revealing',
+  'synchronization keeps the reveal visible for fifteen seconds'
+);
+
+update private.game_rounds
+set revealed_at = statement_timestamp() - interval '16 seconds'
+where id = (
+  select (state->'currentRound'->>'id')::uuid
+  from road_test_state
+  where step = 'revealed'
+);
+
 insert into road_test_state (step, state)
 select
   'round_two',
@@ -262,7 +288,7 @@ where started.step = 'started';
 select extensions.is(
   (select state->>'status' from road_test_state where step = 'round_two'),
   'playing',
-  'synchronization advances after the five-second reveal'
+  'synchronization advances after the fifteen-second reveal'
 );
 select extensions.is(
   (select (state->>'roundNumber')::integer from road_test_state where step = 'round_two'),

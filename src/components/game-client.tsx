@@ -52,6 +52,8 @@ type DemoRoundResult = {
 
 type LoadState = "loading" | "ready" | "error";
 
+const DEMO_REVEAL_DURATION_SECONDS = 15;
+
 function readDemoConfig(gameId: string): DemoConfig | null {
   try {
     const raw = window.sessionStorage.getItem(`roadhunt:game:${gameId}`);
@@ -387,7 +389,7 @@ function DemoGame({ gameId }: { gameId: string }) {
         },
       ]);
       if (!acceptedPosition) setSelectedPosition(null);
-      setRevealEndsAt(Date.now() + 5_000);
+      setRevealEndsAt(Date.now() + DEMO_REVEAL_DURATION_SECONDS * 1_000);
       setClock(Date.now());
       setPhase("revealing");
     },
@@ -465,7 +467,7 @@ function DemoGame({ gameId }: { gameId: string }) {
       streetName={currentRound.targetStreetName}
       bounds={city.bounds}
       secondsRemaining={secondsRemaining}
-      timerProgress={secondsRemaining / (revealing ? 5 : 60)}
+      timerProgress={secondsRemaining / (revealing ? DEMO_REVEAL_DURATION_SECONDS : 60)}
       selectedPosition={selectedPosition}
       viewerNickname={config.nickname}
       viewerMarkerColor={demoMarkerColor}
