@@ -9,6 +9,13 @@
     "cities": "Städte",
     "language": "English"
   },
+  "Footer": {
+    "legalNavigation": "Rechtliche Informationen",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "attribution": "Kartendaten © OpenStreetMap-Mitwirkende"
+  },
   "Play": {
     "back": "Zurück",
     "eyebrow": "Neue Jagd",

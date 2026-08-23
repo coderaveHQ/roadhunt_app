@@ -9,6 +9,13 @@
     "cities": "Cities",
     "language": "Deutsch"
   },
+  "Footer": {
+    "legalNavigation": "Legal information",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "attribution": "Map data © OpenStreetMap contributors"
+  },
   "Play": {
     "back": "Back",
     "eyebrow": "New hunt",

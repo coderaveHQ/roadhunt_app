@@ -115,7 +115,41 @@ button { font: inherit; }
 .final-cta { margin-bottom: 80px; padding: 70px; display: flex; justify-content: space-between; align-items: center; gap: 40px; background: var(--orange); color: white; }
 .final-cta p { max-width: 530px; font-weight: 500; }
 .cta-button { min-width: 230px; padding: 20px 22px; background: var(--lime); color: var(--ink); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); display: flex; justify-content: space-between; text-transform: uppercase; font-size: 13px; }
-footer { min-height: 110px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.site-footer { min-height: 138px; padding-block: 28px; border-top: 1px solid var(--line); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 30px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.site-footer-brand { display: flex; flex-direction: column; align-items: start; gap: 8px; }
+.site-footer-brand > span { padding-left: 39px; color: #687385; font-size: 8px; }
+.site-footer-brand > span a { color: var(--orange); font-weight: 900; }
+.site-footer nav { justify-self: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; }
+.site-footer nav a { border-bottom: 1px solid transparent; transition: border-color .2s ease, color .2s ease; }
+.site-footer nav a:hover { color: var(--orange); border-color: currentColor; }
+.site-footer-copyright { white-space: nowrap; }
+
+/* Legal pages */
+.legal-page { min-height: 100svh; overflow: hidden; background: var(--paper); }
+.legal-main { position: relative; padding-block: 72px 105px; }
+.legal-main::before { content: ""; position: absolute; z-index: 0; width: 240px; height: 240px; right: -95px; top: 185px; border: 3px solid var(--ink); border-radius: 50% 50% 50% 7%; background: var(--orange); box-shadow: 10px 10px 0 var(--ink); transform: rotate(-45deg); }
+.legal-hero { position: relative; z-index: 1; padding-bottom: 58px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 50px; }
+.legal-hero h1 { max-width: 920px; margin: 22px 0 18px; font-size: clamp(55px, 8vw, 106px); line-height: .86; letter-spacing: -.075em; text-transform: uppercase; }
+.legal-hero > div > p { max-width: 690px; margin: 0; color: #566377; font-size: 18px; line-height: 1.55; font-weight: 500; }
+.legal-hero aside { min-width: 195px; padding: 20px; border: 3px solid var(--ink); background: var(--lime); box-shadow: 6px 6px 0 var(--ink); transform: rotate(1deg); }
+.legal-hero aside span, .legal-hero aside strong { display: block; }
+.legal-hero aside span { margin-bottom: 8px; color: #576247; font-size: 8px; letter-spacing: .16em; text-transform: uppercase; }
+.legal-hero aside strong { font-size: 13px; text-transform: uppercase; }
+.legal-card { position: relative; z-index: 1; width: min(960px, calc(100% - 70px)); margin-left: auto; border: 3px solid var(--ink); background: white; box-shadow: 11px 11px 0 var(--ink); }
+.legal-section { padding: 44px 48px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 18px; }
+.legal-section:last-child { border-bottom: 0; }
+.legal-section-number { padding-top: 5px; color: var(--orange); font-size: 10px; letter-spacing: .14em; }
+.legal-section h2 { margin: 0 0 18px; font-size: clamp(21px, 2.5vw, 31px); line-height: 1; letter-spacing: -.04em; text-transform: uppercase; }
+.legal-section p, .legal-section address, .legal-section li { color: #536074; font-size: 15px; line-height: 1.72; font-weight: 500; }
+.legal-section p { margin: 0 0 15px; }
+.legal-section p:last-child { margin-bottom: 0; }
+.legal-section address { margin: 0 0 16px; font-style: normal; }
+.legal-section address:last-child { margin-bottom: 0; }
+.legal-section address strong { color: var(--ink); font-weight: 800; }
+.legal-section ul { margin: 0; padding-left: 19px; }
+.legal-section li + li { margin-top: 9px; }
+.legal-section a { color: var(--ink); border-bottom: 1px solid var(--orange); font-weight: 700; transition: color .2s ease; }
+.legal-section a:hover { color: var(--orange); }
 
 /* Game setup */
 .play-page { min-height: 100svh; overflow-x: clip; overflow-y: visible; background: var(--paper); }
@@ -375,6 +409,13 @@ footer { min-height: 110px; border-top: 1px solid var(--line); display: flex; al
   .game-location { display: none; }
   .game-stage { height: calc(100svh - 92px); grid-template-columns: minmax(0, 1fr) 305px; }
   .game-panel { padding: 20px; }
+  .site-footer { grid-template-columns: auto 1fr; }
+  .site-footer nav { justify-self: end; justify-content: end; }
+  .site-footer-copyright { grid-column: 1 / -1; justify-self: end; }
+  .legal-main::before { width: 180px; height: 180px; right: -90px; }
+  .legal-hero { grid-template-columns: 1fr; align-items: start; gap: 32px; }
+  .legal-hero aside { min-width: 210px; justify-self: start; }
+  .legal-card { width: calc(100% - 22px); }
 }
 
 @media (max-width: 640px) {
@@ -398,7 +439,21 @@ footer { min-height: 110px; border-top: 1px solid var(--line); display: flex; al
   .scores { margin-bottom: 70px; padding: 26px; }
   .final-cta { width: 100%; margin-bottom: 0; padding: 48px 24px; }
   .cta-button { min-width: 100%; }
-  footer { padding-block: 28px; flex-direction: column; }
+  .site-footer { padding-block: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .site-footer-brand { align-items: center; }
+  .site-footer-brand > span { padding-left: 0; }
+  .site-footer nav { justify-content: center; }
+  .site-footer-copyright { margin-top: 3px; }
+  .legal-main { padding-block: 50px 76px; }
+  .legal-main::before { display: none; }
+  .legal-hero { padding-bottom: 38px; gap: 27px; }
+  .legal-hero h1 { margin-top: 18px; font-size: clamp(42px, 12.5vw, 60px); overflow-wrap: break-word; hyphens: auto; }
+  .legal-hero > div > p { font-size: 15px; }
+  .legal-hero aside { width: 100%; min-width: 0; transform: none; }
+  .legal-card { width: calc(100% - 7px); margin-left: 0; box-shadow: 7px 7px 0 var(--ink); }
+  .legal-section { padding: 31px 22px; grid-template-columns: 1fr; gap: 8px; }
+  .legal-section h2 { margin-bottom: 15px; }
+  .legal-section p, .legal-section address, .legal-section li { font-size: 14px; }
   .setup-layout { width: 100%; padding: 35px 12px 52px; gap: 28px; }
   .setup-copy { padding-inline: 2px; }
   .setup-copy h1 { font-size: 50px; }

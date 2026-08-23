@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LanguageSwitch } from "@/components/language-switch";
 import { LocalBestScores } from "@/components/local-best-scores";
 import { Logo } from "@/components/logo";
+import { SiteFooter } from "@/components/site-footer";
 import type { Locale } from "@/i18n/routing";
 import { CITIES } from "@/lib/game";
 
@@ -111,11 +112,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <a className="cta-button" href={`/${locale}/play?mode=solo`}>{t("playNow")}<span aria-hidden="true">→</span></a>
       </section>
 
-      <footer className="shell">
-        <Logo />
-        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">{t("attribution")}</a>
-        <span>© 2026 ROADHUNT</span>
-      </footer>
+      <SiteFooter locale={locale} />
     </main>
   );
 }
