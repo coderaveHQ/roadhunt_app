@@ -512,6 +512,8 @@ set search_path = ''
 as $$
   select case
     when p_distance_m is null or p_distance_m >= 500 then 0
+    -- Keep aligned with STREET_HIT_RADIUS_METERS in src/lib/game/scoring.ts.
+    when greatest(0, p_distance_m) <= 15 then 1000
     else round(
       1000
       * power(greatest(0, 1 - greatest(0, p_distance_m) / 500), 2)

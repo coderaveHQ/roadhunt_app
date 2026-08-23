@@ -9,9 +9,10 @@ import {
 } from "../../src/lib/game/scoring";
 
 describe("Roadhunt scoring", () => {
-  it("awards the full 1,000 points only for an immediate exact answer", () => {
+  it("awards the full 1,000 points anywhere within the street hit radius", () => {
     expect(calculateRoundScore({ distanceMeters: 0, remainingSeconds: 60 })).toBe(1_000);
-    expect(calculateRoundScore({ distanceMeters: 0, remainingSeconds: 0 })).toBe(850);
+    expect(calculateRoundScore({ distanceMeters: 15, remainingSeconds: 0 })).toBe(1_000);
+    expect(calculateRoundScore({ distanceMeters: 15.01, remainingSeconds: 0 })).toBeLessThan(1_000);
   });
 
   it("applies the squared accuracy curve and time factor", () => {
@@ -28,7 +29,7 @@ describe("Roadhunt scoring", () => {
 
   it("clamps time to the configured round duration", () => {
     expect(calculateRoundScore({ distanceMeters: 0, remainingSeconds: 99 })).toBe(1_000);
-    expect(calculateRoundScore({ distanceMeters: 0, remainingSeconds: -10 })).toBe(850);
+    expect(calculateRoundScore({ distanceMeters: 0, remainingSeconds: -10 })).toBe(1_000);
   });
 });
 

@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select extensions.plan(69);
+select extensions.plan(70);
 
 select extensions.has_schema('private', 'private schema exists');
 select extensions.has_table('public', 'cities', 'public city catalog exists');
@@ -160,7 +160,8 @@ select extensions.ok(
 );
 
 select extensions.is(public.calculate_score(0, 60), 1000, 'perfect instant guess earns 1000');
-select extensions.is(public.calculate_score(0, 0), 850, 'perfect last-second guess keeps 85 percent');
+select extensions.is(public.calculate_score(15, 0), 1000, 'a last-second street hit earns the full 1000');
+select extensions.ok(public.calculate_score(15.01, 60) < 1000, 'the distance curve starts outside the street hit radius');
 select extensions.is(public.calculate_score(250, 60), 250, 'half-distance accuracy is squared');
 select extensions.is(public.calculate_score(500, 60), 0, '500 metres earns zero');
 select extensions.is(

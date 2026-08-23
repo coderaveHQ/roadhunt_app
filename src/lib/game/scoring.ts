@@ -2,6 +2,8 @@ export const ROUND_DURATION_SECONDS = 60;
 export const REVEAL_DURATION_SECONDS = 5;
 export const ROUNDS_PER_GAME = 10;
 export const MAX_SCORING_DISTANCE_METERS = 500;
+// OSM stores road centerlines, so this radius models the clickable road surface.
+export const STREET_HIT_RADIUS_METERS = 15;
 export const MAX_ROUND_SCORE = 1_000;
 export const MAX_GAME_SCORE = ROUNDS_PER_GAME * MAX_ROUND_SCORE;
 
@@ -22,6 +24,14 @@ export function calculateRoundScore(input: RoundScoreInput): number {
   const duration = input.roundDurationSeconds ?? ROUND_DURATION_SECONDS;
   if (!Number.isFinite(duration) || duration <= 0) {
     throw new RangeError("Round duration must be a positive finite number");
+  }
+
+  if (
+    input.distanceMeters !== null &&
+    Number.isFinite(input.distanceMeters) &&
+    Math.max(0, input.distanceMeters) <= STREET_HIT_RADIUS_METERS
+  ) {
+    return MAX_ROUND_SCORE;
   }
 
   const accuracy = calculateAccuracy(input.distanceMeters);
